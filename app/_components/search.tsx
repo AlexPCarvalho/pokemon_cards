@@ -20,33 +20,33 @@ const Search = () => {
 
   useEffect(() => {
     const fetchCards = async () => {
-      if (debouncedTerm === '') {
+      if (debouncedTerm === "") {
         setCards([]);
-        setError('');
+        setError("");
         return;
       }
-  
+
       setLoading(true);
-      setError('');
-  
+      setError("");
+
       try {
         const data = await searchCards(debouncedTerm);
-  
+
         if (data.length === 0) {
           setCards([]);
-          setError('Nenhuma carta encontrada.');
+          setError("Nenhuma carta encontrada.");
         } else {
           setCards(data);
         }
       } catch (err) {
         console.error(err);
-        setError('Erro ao buscar cartas.');
+        setError("Erro ao buscar cartas.");
         setCards([]);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchCards();
   }, [debouncedTerm]);
   return (
@@ -59,8 +59,20 @@ const Search = () => {
           placeholder="Pesquise pelo Pokemon..."
           className="w-full h-14 px-9  rounded-full bg-white text-lg border-2"
         />
-        {loading && <p>Carregando...</p>}
-        {error && !loading && <p>{error}</p>}
+        {loading && <p className="text-center text-lg p-6">Carregando...</p>}
+        {error && !loading && (
+          <p className="text-center text-lg p-6 text-red-500">{error}</p>
+        )}
+      {!loading && !error && cards.length > 0 && (
+        <div className="grid grid-cols-3 gap-4 mt-6">
+          {cards.map((card) => (
+            <div key={card.id}>
+              <img src={card.images.small} alt={card.name} />
+              <p className="text-center text-lg pt-4">{card.name}</p>
+            </div>
+          ))}
+        </div>
+      )}
       </div>
     </div>
   );
