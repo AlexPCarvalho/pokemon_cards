@@ -1,12 +1,13 @@
-import Card from "../_components/card";
 import Search from "../_components/search";
+import Title from "../_components/title";
 
 
 const Home = () => {
   return (
-    <div className="text-center mt-15 justify-center items-center  min-h-screen w-full">
+    <div className="text-center mt-30 justify-center items-center  min-h-screen w-full">
+      <Title />
       <Search />
-      <Card />
+    
     </div>
   );
 };
